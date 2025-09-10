@@ -76,6 +76,98 @@ document.addEventListener('DOMContentLoaded', function() {
             tbody.innerHTML = '<tr><td colspan="3">메뉴별 매출 데이터를 불러오는데 실패했습니다.</td></tr>';
         }
     }
+    // --- 실시간 주문 관련 함수 ---
+async function fetchAndRenderTableOrders() {
+    const container = document.getElementById('live-order-container');
+    try {
+        const response = await fetch('http://localhost:8080/api/orders/unpaid', { headers: authHeaders });
+        if (!response.ok) throw new Error('미결제 주문 로딩 실패');
+        const tables = await response.json();
+
+        if (tables.length === 0) {
+            container.innerHTML = '<p>현재 들어온 주문이 없습니다.</p>';
+            return;
+        }
+
+        const cardsHtml = tables.map(table => {
+            // 각 주문의 메뉴 항목들을 HTML 문자열로 만듭니다.
+            const ordersHtml = table.orders.map(order =>
+                order.orderItems.map(item => `
+                    <div class="order-item">
+                        <span>${item.menuName} x ${item.quantity}</span>
+                        <span>${(item.pricePerItem * item.quantity).toLocaleString()}원</span>
+                    </div>
+                `).join('')
+            ).join('');
+
+            return `
+                <div class="table-card" data-table-number="${table.tableNumber}">
+                    <h3>${table.tableNumber}번 테이블</h3>
+                    <div class="order-items-container">
+                        ${ordersHtml}
+                    </div>
+                    <div class="total-amount">
+                        <span>총액: </span>
+                        <span>${table.totalAmount.toLocaleString()}원</span>
+                    </div>
+                    <button class="action-button pay-button" data-table-number="${table.tableNumber}">결제 완료</button>
+                </div>
+            `;
+        }).join('');
+
+        container.innerHTML = cardsHtml;
+
+    } catch (error) {
+        console.error(error);
+        container.innerHTML = '<p>주문 정보를 불러오는데 실패했습니다.</p>';
+    }
+}
+
+async function processTablePayment(tableNumber) {
+    if (!confirm(`${tableNumber}번 테이블의 결제를 완료하시겠습니까?`)) return;
+
+    try {
+        const response = await fetch(`http://localhost:8080/api/orders/pay/table/${tableNumber}`, {
+            method: 'POST',
+            headers: authHeaders
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || '결제 처리에 실패했습니다.');
+        }
+
+        alert(`${tableNumber}번 테이블의 결제가 완료되었습니다.`);
+        fetchAndRenderTableOrders(); // 결제 완료 후 주문 목록 새로고침
+
+    } catch (error) {
+        alert('결제 처리 중 오류 발생: ' + error.message);
+    }
+}
+
+function setupWebSocket() {
+    const ws = new WebSocket('ws://localhost:8080/ws/order');
+
+    ws.onopen = () => {
+        console.log('WebSocket 연결 성공!');
+    };
+
+    ws.onmessage = (event) => {
+        console.log('새로운 주문 알림 수신:', event.data);
+        // 새 주문이 오면, 주문 현황판을 통째로 다시 그림
+        fetchAndRenderTableOrders();
+    };
+
+    ws.onclose = () => {
+        console.log('WebSocket 연결 끊김. 5초 후 재연결 시도...');
+        setTimeout(setupWebSocket, 5000); // 5초 후 재연결
+    };
+
+    ws.onerror = (error) => {
+        console.error('WebSocket 오류 발생:', error);
+        ws.close();
+    };
+}
 
     function renderSalesByMenuTable(salesData) {
         const tbody = document.getElementById('sales-by-menu-tbody');
@@ -296,12 +388,20 @@ async function deleteUser(userId) {
         if (event.target == editMenuModal) closeEditMenuModal();
     });
 
+    const liveOrderContainer = document.getElementById('live-order-container');
+    liveOrderContainer.addEventListener('click', (event) => {
+    if (event.target.matches('.pay-button')) {
+        const tableNumber = event.target.dataset.tableNumber;
+        processTablePayment(tableNumber);
+    }
+    });
+
     userListTbody.addEventListener('click', (event) => {
     if (event.target.matches('.user-delete-btn')) {
         const userId = event.target.dataset.userId;
         deleteUser(userId);
     }
-});
+    });
 
     categoryContainer.addEventListener('click', (event) => {
         if(event.target.matches('.category-button')) {
@@ -435,5 +535,7 @@ async function deleteUser(userId) {
         fetchUsers(); 
         setupSalesCharts();
         fetchSalesByMenu();
+        fetchAndRenderTableOrders(); 
+        setupWebSocket(); 
     })();
 });

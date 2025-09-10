@@ -341,3 +341,53 @@ footer {
     background-color: #f1c40f; /* 마우스를 올렸을 때 배경색 변경 */
     color: white;
 }
+
+/* --- 실시간 주문 현황 스타일 --- */
+#live-order-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.table-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.table-card h3 {
+    margin-top: 0;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.table-card .order-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95em;
+    padding: 5px 0;
+}
+
+.table-card .total-amount {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: right;
+}
+
+.pay-button {
+    width: 100%;
+    margin-top: 15px;
+    background-color: #27ae60;
+    padding: 12px;
+    font-size: 16px;
+}
+
+.pay-button:hover {
+    background-color: #2ecc71;
+}
