@@ -85,10 +85,12 @@ footer {
 .menu-card {
     background-color: #f8f9fa;
     border: 1px solid #e9ecef;
-    border-radius: 8px;
+    border-radius: 15px;
     padding: 15px;
     display: flex;
+    gap: 5px;
     justify-content: space-between;
+    flex-direction: column;
     align-items: center;
 }
 
@@ -109,7 +111,8 @@ footer {
 /* 품절/판매중 상태 표시 스타일 */
 .menu-status {
     padding: 5px 10px;
-    border-radius: 15px;
+    border-radius: 20px;
+    display: inline-block;
     font-weight: bold;
     color: white;
     background-color: #28a745; /* 판매중: 초록색 */
@@ -123,11 +126,11 @@ footer {
 
 /* 메뉴 카드 내부의 이미지 스타일 */
 .menu-image {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     border-radius: 8px;
     object-fit: cover; /* 이미지가 찌그러지지 않고 비율에 맞게 채워짐 */
-    margin-right: 15px;
+    /* margin-right: 15px; */
 }
 
 /* 이미지가 없을 때 표시될 네모칸 스타일 */
@@ -147,10 +150,15 @@ footer {
     padding: 15px;
     display: flex; /* 내부 요소들을 가로로 배치 */
     align-items: center; /* 세로 중앙 정렬 */
+    gap: 10px;
 }
 
 .menu-info {
-    flex-grow: 1; /* 남은 공간을 모두 차지하도록 설정 */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    text-align: center;
 }
 
 /* 관리 버튼 영역 */
@@ -282,15 +290,13 @@ footer {
 
 /* --- 메뉴 카드 내 관리 버튼 --- */
 .menu-actions {
-    display: flex;
-    flex-direction: column; /* 버튼들을 세로로 정렬 */
+    display: flex; /* 버튼들을 세로로 정렬 */
     gap: 5px; /* 버튼 사이의 간격 */
-    margin-left: 15px;
 }
 
 .menu-actions button {
     border: none;
-    padding: 8px 12px;
+    padding: 6px 12px;
     border-radius: 5px;
     cursor: pointer;
     color: white;

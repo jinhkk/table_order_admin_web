@@ -225,7 +225,8 @@ function setupWebSocket() {
                         <p>${item.price.toLocaleString()}원</p>
                         <p class="menu-description">${item.description || ''}</p>
                     </div>
-                    <div class="menu-status ${item.isSoldOut ? 'sold-out' : ''}">${item.isSoldOut ? '품절' : '판매중'}</div>
+                     <div class="menu-status ${item.isSoldOut ? 'sold-out' : ''}">${item.isSoldOut ? '품절' : '판매중'}</div>
+                    
                     <div class="menu-actions">
                         <button class="action-button-edit" data-menu-id="${item.id}">수정</button>
                         <button class="action-button-delete" data-menu-id="${item.id}">삭제</button>
