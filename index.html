@@ -18,62 +18,50 @@
         <section id="sales-section">
             <h2>매출 현황</h2>
             
-            <div class="chart-container">
-                <h3>최근 30일 매출</h3>
-                <canvas id="daily-sales-chart"></canvas>
-            </div>
-            <div class="chart-container">
-                <h3>올해 월별 매출</h3>
-                <canvas id="monthly-sales-chart"></canvas>
-            </div>
-
-
-            <div class="table-container">
-                <h3>메뉴별 판매 순위 (최근 30일)</h3>
-                <table id="sales-by-menu-table">
-                    <thead>
-                        <tr>
-                            <th>메뉴</th>
-                            <th>판매 수량</th>
-                            <th>총 매출액</th>
-                        </tr>
-                    </thead>
-                    <tbody id="sales-by-menu-tbody">
-                        </tbody>
-                </table>
+           <div class="charts-wrapper"> 
+                <div class="chart-container">
+                    <h3>최근 30일 매출</h3>
+                    <canvas id="daily-sales-chart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>올해 월별 매출</h3>
+                    <canvas id="monthly-sales-chart"></canvas>
+                </div>
             </div>
 
+
+            
             <section id="live-order-section">
                 <h2>실시간 주문 현황</h2>
                 <div id="live-order-container">
                 </div>
             </section>
-
-
-       <section id="menu-management-section">
-            <h2>메뉴 관리</h2>
-
-            <div class="management-actions">
-                <button id="add-new-menu-btn" class="action-button">새 메뉴 추가</button>
+            
+            
+            <section id="menu-management-section">
+                <h2>메뉴 관리</h2>
+                
+                <div class="management-actions">
+                    <button id="add-new-menu-btn" class="action-button">새 메뉴 추가</button>
             </div>
 
 
             <div id="category-list-container">
                 </div>
-
-            <div id="menu-list-container">
-                <h3>메뉴 목록</h3>
-                <div id="menu-list">
-                    <p>카테고리를 선택해주세요.</p>
+                
+                <div id="menu-list-container">
+                    <h3>메뉴 목록</h3>
+                    <div id="menu-list">
+                        <p>카테고리를 선택해주세요.</p>
                 </div>
             </div>
 
         </section>
 
-
-          <section id="user-management-section">
+        
+        <section id="user-management-section">
             <h2>유저 관리</h2>
-
+            
             <div class="management-actions">
                 <button id="add-new-user-btn" class="action-button">새 직원 추가</button>
             </div>
@@ -87,21 +75,35 @@
                             <th>역할</th>
                             <th>가입일</th>
                              <th>관리</th> </tr>
-                        </tr>
-                    </thead>
-                    <tbody id="user-list-tbody">
+                            </tr>
+                        </thead>
+                        <tbody id="user-list-tbody">
                         </tbody>
-                </table>
+                    </table>
             </div>
         </section>
+        <div class="table-container">
+            <h3>메뉴별 판매 순위 (최근 30일)</h3>
+            <table id="sales-by-menu-table">
+                <thead>
+                    <tr>
+                        <th>메뉴</th>
+                        <th>판매 수량</th>
+                        <th>총 매출액</th>
+                    </tr>
+                </thead>
+                <tbody id="sales-by-menu-tbody">
+                    </tbody>
+            </table>
+        </div>
     </main>
 
     <footer>
         <p>&copy; 2025 TableOrder Project. All Rights Reserved.</p>
     </footer>
+    
 
-
- <div id="add-menu-modal" class="modal">
+    <div id="add-menu-modal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
             <h2>새 메뉴 추가</h2>

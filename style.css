@@ -397,3 +397,27 @@ footer {
 .pay-button:hover {
     background-color: #2ecc71;
 }
+
+.charts-wrapper {
+    display: flex; /* 내부 아이템들을 가로로 배치! */
+    flex-wrap: wrap; /* 공간이 부족하면 줄바꿈을 허용 */
+    gap: 20px; /* 차트 사이의 간격을 줌 */
+    margin-bottom: 20px; /* 아래 메뉴별 순위 테이블과의 간격 */
+}
+
+/* 2. 각 차트 컨테이너가 유연하게 크기를 조절하도록 설정 */
+.charts-wrapper .chart-container {
+    flex: 1 1 400px; /* 기본적으로 400px 공간을 차지하되, 공간이 남으면 늘어나고 부족하면 줄어들도록 설정 */
+    margin: 0; /* 기존의 margin은 wrapper에서 관리하므로 초기화 */
+    min-width: 300px; /* 차트가 아무리 작아져도 최소 300px 너비는 확보 */
+}
+.user-delete-btn{
+    background-color: #fff !important;
+    outline: none ;
+    border: none;
+    border-radius: 5px;
+    background-color: #e74c3c !important;
+    width: 50px;
+    height: 30px;
+    color: #fff;
+}
